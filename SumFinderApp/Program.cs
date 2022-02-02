@@ -9,6 +9,7 @@ namespace SumFinderApp
         private static int firstElement;
         private static int lastElement;
         private static int sum;
+        private static string validationErrorMessage;
 
         private static bool checkAgain = true;
 
@@ -17,8 +18,8 @@ namespace SumFinderApp
 
             while (checkAgain)
             {
-
-                if (GetInformationFromUser())
+                validationErrorMessage = string.Empty;
+                if (GetValidInformationFromUser())
                 {
                     var numbers = CreateArrayOnRange(firstElement, lastElement); 
                     var matches = GetNumbersWhereDigitsMatchSum(numbers, sum);
@@ -28,7 +29,8 @@ namespace SumFinderApp
                 }
                 else
                 {
-                    Console.WriteLine("Wrong input, please try again and enter valid valid values!");
+                    Console.WriteLine("Wrong input, please try again and enter valid values. Details: ");
+                    Console.WriteLine(validationErrorMessage); 
                 }
 
             }
@@ -38,22 +40,59 @@ namespace SumFinderApp
         }
 
         // method to get valid user input from keyboard and write it into app variables
-        private static bool GetInformationFromUser()
+        private static bool GetValidInformationFromUser()
         {
             Console.WriteLine("Enter first element of array:");
-            int.TryParse(Console.ReadLine(), out firstElement);
+            if (int.TryParse(Console.ReadLine(), out firstElement))
+            {
+                if (firstElement < 0)
+                {
+                    validationErrorMessage = "First element must positive number or 0";
+                    return false;
+                }
+            }
+            else
+            {
+                validationErrorMessage = "You input wrong value for firstElement value, it can't be parsed as int";
+                return false;
+            }
 
             Console.WriteLine("Enter last element of array");
-            int.TryParse(Console.ReadLine(), out lastElement);
+            if(int.TryParse(Console.ReadLine(), out lastElement))
+            {
+                if (lastElement < 1)
+                {
+                    validationErrorMessage = "Last element has to be above 0";
+                    return false;
+                }
+                if (lastElement <= firstElement)
+                {
+                    validationErrorMessage = "Last element can't be less than first or the same";
+                    return false;
+                }
+            }
+            else
+            {
+                validationErrorMessage = "You input wrong value for lastElement, it can't be parsed as int";
+                return false;
+            }
 
             Console.WriteLine("Enter sum parameter to check array elements: ");
-            int.TryParse(Console.ReadLine(), out sum);
-
-            if ((firstElement >= 0 && lastElement > 0) && (firstElement < lastElement) && (sum > 0))
+            if(int.TryParse(Console.ReadLine(), out sum))
             {
-                return true;
+                if (sum <= 0)
+                {
+                    validationErrorMessage= "It's not valid to enter 0 or negative number as sum value";
+                    return false;
+                }
             }
-            return false;
+            else
+            {
+                validationErrorMessage = "You input wrong value for sum, it can't be parsed as int";
+                return false;
+            }
+
+            return true;
         }
 
         // method allows user to restart or terminate program after each successful work cycle
