@@ -24,8 +24,6 @@ namespace SumFinderApp
                     var matches = GetNumbersWhereDigitsMatchSum(numbers, sum);
 
                     PrintResultOfOperation(matches);
-
-                    // users can control the flow of program - stop it or use again
                     AskUserToRestartOrTerminate();
                 }
                 else
@@ -62,8 +60,9 @@ namespace SumFinderApp
         private static void AskUserToRestartOrTerminate()
         {
             Console.WriteLine("1 to restart. Any other input will terminate program: ");
-
-            if (int.Parse(Console.ReadLine()) != 1)
+            int userInput;
+            int.TryParse(Console.ReadLine(), out userInput);
+            if (userInput != 1)
             {
                 checkAgain = false;
             }
