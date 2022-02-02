@@ -47,7 +47,7 @@ namespace SumFinderApp
             {
                 if (firstElement < 0)
                 {
-                    validationErrorMessage = "First element must positive number or 0";
+                    validationErrorMessage = "Using of negative numbers is forbidden!";
                     return false;
                 }
             }
@@ -60,11 +60,6 @@ namespace SumFinderApp
             Console.WriteLine("Enter last element of array");
             if(int.TryParse(Console.ReadLine(), out lastElement))
             {
-                if (lastElement < 1)
-                {
-                    validationErrorMessage = "Last element has to be above 0";
-                    return false;
-                }
                 if (lastElement <= firstElement)
                 {
                     validationErrorMessage = "Last element can't be less than first or the same";
@@ -82,7 +77,7 @@ namespace SumFinderApp
             {
                 if (sum <= 0)
                 {
-                    validationErrorMessage= "It's not valid to enter 0 or negative number as sum value";
+                    validationErrorMessage = $"Only positive numbers are allowed to use as value of {nameof(sum)} parameter";
                     return false;
                 }
             }
